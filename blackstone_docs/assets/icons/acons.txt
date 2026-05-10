@@ -1,0 +1,107 @@
+Вот полный список из 50 сервисов, где можно создать иконку (конструкторы, генераторы, редакторы) или найти/скачать готовую. Для каждого пункта указано название, краткое описание и прямая ссылка.
+
+Все строки оформлены отдельно для удобства копирования.
+
+🛠️ Где создать иконку (онлайн-конструкторы и редакторы)
+Canva — создание иконок с нуля через редактор векторных форм → https://www.canva.com
+
+Adobe Express — быстрый бесплатный редактор иконок с шаблонами → https://www.adobe.com/express/create/icon
+
+Ionicons — создание кастомных наборов иконок под iOS/Android → https://ionicons.com
+
+Hatchful by Shopify — генератор иконок для логотипов и приложений → https://hatchful.shopify.com
+
+Iconify — создание собственных иконок из тысяч готовых элементов → https://iconify.design
+
+IcoMoon — сборка кастомного шрифта из иконок → https://icomoon.io
+
+VectorMagic — конвертация растрового изображения в векторную иконку → https://vectormagic.com
+
+Boxy SVG — мощный векторный редактор (в т.ч. для иконок) → https://boxy-svg.com
+
+Vectr — бесплатный простой графический редактор → https://vectr.com
+
+SVGator — создание анимированных SVG-иконок без кода → https://www.svgator.com
+
+Lunacy — бесплатный редактор для иконок (работает с .sketch) → https://icons8.com/lunacy
+
+Method Draw — базовый онлайн SVG-редактор → https://method.ac
+
+SVG Edit — классический редактор SVG (как встроенный в браузер) → https://svgedit.netlify.app
+
+Placeit — генератор иконок для геймдева и YouTube → https://placeit.net
+
+Figma — полный векторный редактор (используйте для создания профессиональных иконок) → https://www.figma.com
+
+📦 Где искать готовые иконки (бесплатные и платные библиотеки)
+Flaticon — крупнейшая база иконок (есть бесплатные по ссылке) → https://www.flaticon.com
+
+Font Awesome — культовый набор иконок в виде шрифта → https://fontawesome.com
+
+Material Icons (Google) — официальный набор Google → https://fonts.google.com/icons
+
+Iconfinder — поиск иконок по ключевым словам (с фильтром лицензий) → https://www.iconfinder.com
+
+Icons8 — огромная коллекция иконок в едином стиле → https://icons8.com
+
+Feather Icons — открытые минималистичные иконки → https://feathericons.com
+
+Heroicons — красивые Outline/Solid иконки от Tailwind → https://heroicons.com
+
+Bootstrap Icons — официальный набор Bootstrap → https://icons.getbootstrap.com
+
+Phosphor Icons — гибкий набор с 6 вариантами толщины → https://phosphoricons.com
+
+Remix Icon — нейтральные иконки для интерфейсов → https://remixicon.com
+
+Lucide — современный форк Feather → https://lucide.dev
+
+Tabler Icons — 5000+ полностью открытых SVG → https://tabler-icons.io
+
+Boxicons — простые и дружелюбные иконки → https://boxicons.com
+
+CSS.gg — иконки в виде чистого CSS → https://css.gg
+
+Simple Icons — логотипы брендов/сервисов в виде иконок → https://simpleicons.org
+
+Game Icons — 4000+ иконок для игр (бесплатно) → https://game-icons.net
+
+The Noun Project — огромная библиотека от дизайнеров со всего мира → https://thenounproject.com
+
+Streamline Icons — очень подробный и однородный сет → https://www.streamlinehq.com
+
+IconPacks — коллекция тематических наборов → https://www.iconpacks.net
+
+FreeIcons — старый, но надёжный архив → https://freeicons.io
+
+⚙️ Генераторы/конвертеры и вспомогательные инструменты
+Favicon.io — создание favicon из текста, картинки или эмодзи → https://favicon.io
+
+RealFaviconGenerator — генерация полного набора для всех устройств → https://realfavicongenerator.net
+
+CloudConvert (SVG to PNG) — конвертация векторной иконки в растровую → https://cloudconvert.com/svg-to-png
+
+SVGOMG — сжатие SVG-иконок (удаление лишнего кода) → https://svgomg.net
+
+TinyPNG/TinyJPG — сжатие PNG/JPG иконок → https://tinypng.com
+
+Pixelmator Online — базовое редактирование иконок → https://www.pixelmator.com
+
+Remove.bg — удаление фона у иконок с фото/скриншотов → https://www.remove.bg
+
+Photopea — полный Photoshop в браузере (для тонкой правки) → https://www.photopea.com
+
+Convertio — конвертация любых форматов (ICO, SVG, PNG, WEBP) → https://convertio.co
+
+ICOs — создание .ico файлов для фавиконок → https://icoconverter.com
+
+💎 Платные / премиум-сервисы (но с триалами)
+Envato Elements — безлимитная подписка на иконки и дизайн-ресурсы → https://elements.envato.com
+
+Shutterstock Icon — профессиональные иконки от авторов → https://www.shutterstock.com/icons
+
+Vecteezy — много бесплатных и премиум-векторов → https://www.vecteezy.com
+
+DesignEvo — онлайн-генератор иконок-логотипов → https://www.designevo.com
+
+Iconscout — большая библиотека с плагинами для Figma/Adobe → https://iconscout.com
