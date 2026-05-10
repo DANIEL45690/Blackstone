@@ -1,6 +1,6 @@
 <div align="center">
-
-# ⚫ BLACKSTONE
+# <img width="848" height="1264" alt="image" src="https://github.com/user-attachments/assets/a283b674-0492-473a-9968-b45b880b4f80" />
+#  BLACKSTONE
 ## ENTERPRISE CRYPTOGRAPHIC MODULE v3.0
 
 [![C](https://img.shields.io/badge/C-99-00599C?style=flat-square&logo=c)](https://en.wikipedia.org/wiki/C_(programming_language))
