@@ -162,3 +162,17 @@ typedef struct {
     uint8_t signature[32];
 } bank_transaction_t;
 ```
+## ⚡ Быстрая установка
+
+### Windows (MSVC/MinGW)
+
+```batch
+git clone https://github.com/yourusername/blackstone.git
+cd blackstone
+
+# MSVC
+cl main.cpp /O2 /Fe:blackstone.exe
+
+# MinGW
+gcc main.cpp -O2 -o blackstone.exe
+```
