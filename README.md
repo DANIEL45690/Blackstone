@@ -176,3 +176,141 @@ cl main.cpp /O2 /Fe:blackstone.exe
 # MinGW
 gcc main.cpp -O2 -o blackstone.exe
 ```
+## 💻 Базовый пример кода
+
+### Полный рабочий пример
+
+```c
+#include <stdio.h>
+#include <string.h>
+#include "blackstone.h"  // или просто скопируй main.cpp в проект
+
+int main() {
+    printf("=== BLACKSTONE CRYPTO MODULE v3.0 ===\n\n");
+    
+   
+    if (!bank_init_master_random()) {
+        printf("Ошибка инициализации!\n");
+        return 1;
+    }
+    printf("✅ Модуль инициализирован\n");
+    
+   
+    int session_id = bank_create_session("payment_gateway", 15, 60);
+    if (session_id <= 0) {
+        printf("Ошибка создания сессии!\n");
+        bank_wipe_master();
+        return 1;
+    }
+    printf("✅ Сессия создана: ID=%d\n", session_id);
+    
+  
+    uint8_t plaintext[] = "Сумма перевода: 1,000,000 RUB\nНазначение: Инвестиционный контракт #4892";
+    size_t plain_len = strlen((char*)plaintext);
+    
+    printf("\n📄 Исходные данные (%zu байт):\n%s\n\n", plain_len, plaintext);
+    
+    
+    uint8_t ciphertext[4096];
+    uint8_t iv[12];      // вектор инициализации
+    uint8_t tag[16];     // аутентификационный тег
+    size_t cipher_len;
+    
+    if (!bank_encrypt_data(plaintext, plain_len, NULL, 0, session_id,
+                           ciphertext, &cipher_len, iv, tag)) {
+        printf("❌ Ошибка шифрования!\n");
+        bank_destroy_session(session_id);
+        bank_wipe_master();
+        return 1;
+    }
+    printf("🔒 Данные зашифрованы (%zu байт)\n", cipher_len);
+    printf("   IV (hex): ");
+    for (int i = 0; i < 12; i++) printf("%02x", iv[i]);
+    printf("\n   TAG (hex): ");
+    for (int i = 0; i < 16; i++) printf("%02x", tag[i]);
+    printf("\n");
+    
+  
+    uint8_t signature[32];
+    if (!bank_sign_data(session_id, ciphertext, cipher_len, signature)) {
+        printf("❌ Ошибка подписи!\n");
+    } else {
+        printf("✍️  Подпись создана (HMAC-SHA256)\n");
+    }
+    
+    uint8_t decrypted[4096];
+    size_t decrypted_len;
+    
+    if (!bank_decrypt_data(ciphertext, cipher_len, NULL, 0, session_id,
+                           iv, tag, decrypted, &decrypted_len)) {
+        printf("❌ Ошибка расшифрования!\n");
+    } else {
+        printf("\n🔓 Расшифрованные данные:\n%s\n", decrypted);
+        
+        // Проверяем целостность
+        if (memcmp(plaintext, decrypted, plain_len) == 0) {
+            printf("✅ Данные восстановлены корректно!\n");
+        }
+    }
+    
+ 
+    if (bank_verify_signature(session_id, ciphertext, cipher_len, signature)) {
+        printf("✅ Подпись верифицирована (данные не изменены)\n");
+    } else {
+        printf("❌ Ошибка верификации подписи!\n");
+    }
+    
+
+    bank_transaction tx;
+    uint8_t from[] = "ACC1234567890";
+    uint8_t to[] = "ACC0987654321";
+    uint8_t currency[] = "RUB";
+    
+    if (bank_create_transaction(1001, from, to, 1000000, currency, session_id, &tx)) {
+        printf("\n💰 Финансовая транзакция создана:\n");
+        printf("   ID: %llu\n", (unsigned long long)tx.transaction_id);
+        printf("   Сумма: %llu %s\n", (unsigned long long)tx.amount, tx.currency);
+        printf("   Время: %llu\n", (unsigned long long)tx.timestamp);
+        printf("   Статус: %s\n", tx.verified ? "ВЕРИФИЦИРОВАНА" : "НЕ ВЕРИФИЦИРОВАНА");
+        
+        if (bank_verify_transaction(&tx, session_id)) {
+            printf("✅ Транзакция валидна!\n");
+        }
+    }
+    
+    bank_secure_envelope envelope;
+    if (bank_create_envelope(plaintext, plain_len, NULL, 0, session_id, &envelope)) {
+        printf("\n📦 Secure Envelope создан:\n");
+        printf("   Версия: %u\n", envelope.version);
+        printf("   CRC32: 0x%08X\n", envelope.crc32);
+        printf("   Время: %llu\n", (unsigned long long)envelope.timestamp);
+        
+        // Извлекаем из конверта
+        uint8_t extracted[4096];
+        size_t extracted_len;
+        if (bank_extract_envelope(&envelope, NULL, 0, extracted, &extracted_len)) {
+            printf("✅ Данные извлечены из конверта: %s\n", extracted);
+        }
+    }
+    
+
+    uint64_t total_enc, total_dec, sess_created, sess_destroyed;
+    int active_sessions;
+    bank_get_stats(&total_enc, &total_dec, &sess_created, &sess_destroyed, &active_sessions);
+    
+    printf("\n📊 Статистика работы:\n");
+    printf("   Всего шифрований: %llu\n", (unsigned long long)total_enc);
+    printf("   Всего расшифрований: %llu\n", (unsigned long long)total_dec);
+    printf("   Сессий создано: %llu\n", (unsigned long long)sess_created);
+    printf("   Сессий удалено: %llu\n", (unsigned long long)sess_destroyed);
+    printf("   Активных сессий: %d\n", active_sessions);
+    printf("   Время работы: %ld сек\n", (long)bank_get_library_uptime());
+    
+
+    bank_destroy_session(session_id);
+    bank_wipe_master();
+    printf("\n🧹 Ключи и сессии уничтожены\n");
+    
+    return 0;
+}
+```
