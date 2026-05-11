@@ -1,0 +1,131 @@
+version: '3.8'
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: crypto_mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: crypto_tx
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - crypto-network
+    restart: unless-stopped
+
+  redis:
+    image: redis:alpine
+    container_name: crypto_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - crypto-network
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:15
+    container_name: crypto_postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: crypto
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: crypto_audit
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - crypto-network
+    restart: unless-stopped
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: crypto_rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: password
+    networks:
+      - crypto-network
+    restart: unless-stopped
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.7.0
+    container_name: crypto_elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - crypto-network
+    restart: unless-stopped
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.7.0
+    container_name: crypto_kibana
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+    networks:
+      - crypto-network
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    container_name: crypto_backend
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+    environment:
+      - MONGODB_URI=mongodb://admin:password@mongodb:27017/crypto_tx?authSource=admin
+      - REDIS_URL=redis://redis:6379
+      - POSTGRES_URL=postgresql://crypto:password@postgres:5432/crypto_audit
+      - RABBITMQ_URL=amqp://admin:password@rabbitmq:5672
+      - ELASTIC_URL=http://elasticsearch:9200
+      - NODE_ENV=production
+    depends_on:
+      - mongodb
+      - redis
+      - postgres
+      - rabbitmq
+      - elasticsearch
+    networks:
+      - crypto-network
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    container_name: crypto_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/nginx.conf
+      - ./certificates:/etc/nginx/certificates
+    depends_on:
+      - backend
+    networks:
+      - crypto-network
+    restart: unless-stopped
+
+volumes:
+  mongodb_data:
+  redis_data:
+  postgres_data:
+  elasticsearch_data:
+
+networks:
+  crypto-network:
+    driver: bridge
