@@ -1,3 +1,4 @@
+<img width="1440" height="801" alt="image" src="https://github.com/user-attachments/assets/bbb079ac-403e-4ebd-b461-3604f210bfee" />
 # BLACKSTONE CRYPTOGRAPHIC LIBRARY v3.0
 
 Military-grade cryptographic library
