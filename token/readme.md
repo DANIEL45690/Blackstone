@@ -1,4 +1,4 @@
-# ⚡ P2P TOKEN SYSTEM v4.0
+# ⚡ P2P TOKEN SYSTEM
 
 <div align="center">
 
@@ -31,6 +31,7 @@ P2P Token System is a production-ready, high-performance blockchain implementati
 | Max Tokens | 10,000 |
 
 ---
+<img width="1100" height="550" alt="image" src="https://github.com/user-attachments/assets/e1fc0d36-e3e9-44a9-b613-71605c841c86" />
 
 ## 🚀 Features
 
