@@ -1,6 +1,7 @@
+
 <div align="center">
 
-# 🏦 BANK CRYPTOGRAPHIC MODULE v4.0.0
+# 🏦 options-manager for MAIN-SOFT
 
 ## 🔐 Enterprise-Grade Security & Auto-Updater System
 
@@ -36,6 +37,8 @@
 - [📄 License](#-license)
 
 ---
+<img width="899" height="683" alt="image" src="https://github.com/user-attachments/assets/aa69dc51-a901-4855-abed-ee670e461950" />
+
 
 ## ✨ FEATURES
 
