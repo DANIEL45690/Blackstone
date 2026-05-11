@@ -1,0 +1,42 @@
+[
+    {
+        "directory": ".",
+        "command": "g++ -std=c++17 -Wall -Wextra -O2 -pthread -I. -c core/main.cpp -o core/main.o",
+        "file": "core/main.cpp"
+    },
+    {
+        "directory": ".",
+        "command": "g++ -std=c++17 -Wall -Wextra -O2 -pthread -I. -c core/platform.cpp -o core/platform.o",
+        "file": "core/platform.cpp"
+    },
+    {
+        "directory": ".",
+        "command": "g++ -std=c++17 -Wall -Wextra -O2 -pthread -I. -c core/random.cpp -o core/random.o",
+        "file": "core/random.cpp"
+    },
+    {
+        "directory": ".",
+        "command": "g++ -std=c++17 -Wall -Wextra -O2 -pthread -I. -c core/sha1.cpp -o core/sha1.o",
+        "file": "core/sha1.cpp"
+    },
+    {
+        "directory": ".",
+        "command": "g++ -std=c++17 -Wall -Wextra -O2 -pthread -I. -c core/ternary.cpp -o core/ternary.o",
+        "file": "core/ternary.cpp"
+    },
+    {
+        "directory": ".",
+        "command": "g++ -std=c++17 -Wall -Wextra -O2 -pthread -I. -c core/aes256.cpp -o core/aes256.o",
+        "file": "core/aes256.cpp"
+    },
+    {
+        "directory": ".",
+        "command": "g++ -std=c++17 -Wall -Wextra -O2 -pthread -I. -c core/ecc.cpp -o core/ecc.o",
+        "file": "core/ecc.cpp"
+    },
+    {
+        "directory": ".",
+        "command": "g++ -std=c++17 -Wall -Wextra -O2 -pthread -I. -c core/quantum_signature.cpp -o core/quantum_signature.o",
+        "file": "core/quantum_signature.cpp"
+    }
+]
