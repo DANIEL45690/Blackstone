@@ -1,6 +1,8 @@
+![Uploading image.png…]()
+
 <div align="center">
 
-# 🏦 BANK CRYPTOGRAPHIC MODULE v4.0.0
+# 🏦 options-manager for MAIN-SOFT
 
 ## 🔐 Enterprise-Grade Security & Auto-Updater System
 
