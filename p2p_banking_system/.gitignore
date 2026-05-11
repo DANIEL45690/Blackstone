@@ -1,0 +1,34 @@
+# Build files
+*.o
+*.exe
+*.out
+*.so
+*.dll
+*.dylib
+build/
+cmake-build-*/
+Debug/
+Release/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs and data
+*.log
+*.db
+*.sqlite
+backups/
+data/
+temp/
+
+# Security
+*.key
+*.pem
+*.crt
+*.secret
+.credentials/
