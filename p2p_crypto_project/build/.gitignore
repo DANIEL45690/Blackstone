@@ -1,0 +1,10 @@
+*.o
+*.a
+*.so
+p2p_crypto
+test_runner
+*.dSYM
+*.log
+*.tmp
+*.swp
+.DS_Store
