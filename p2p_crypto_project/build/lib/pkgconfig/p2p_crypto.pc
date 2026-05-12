@@ -1,0 +1,10 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+Name: p2p_crypto
+Description: P2P Token System Cryptographic Library
+Version: 1.0.0
+Requires:
+Libs: -L${libdir} -lp2p_crypto
+Cflags: -I${includedir}
