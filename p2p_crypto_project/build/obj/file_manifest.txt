@@ -1,0 +1,15 @@
+main.o
+crypto_init.o
+crypto_state.o
+sbox_tables.o
+gf256_tables.o
+permutation_tables.o
+encode_decode.o
+hash_core.o
+signature.o
+encryption.o
+key_exchange.o
+random_gen.o
+secure_memory.o
+entropy.o
+self_test.o
