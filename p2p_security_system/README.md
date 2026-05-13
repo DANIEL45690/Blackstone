@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🔒 P2P Security System
+# 🔒 P2P-tester manager
 
 ### *Enterprise-Grade Peer-to-Peer Security Framework*
 
@@ -34,6 +34,8 @@
 - [📄 License](#-license)
 
 ---
+<img width="1232" height="921" alt="image" src="https://github.com/user-attachments/assets/9f367b7d-2ff8-410c-ac14-f5887f4a3e5d" />
+
 
 ## ✨ Features
 
