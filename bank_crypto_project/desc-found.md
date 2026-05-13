@@ -1,3 +1,5 @@
+
+
 # 🔄 P2P Transaction System
 
 <div align="center">
@@ -80,6 +82,96 @@
 | 🔐 Private Key Safety | Hardware wallet support |
 
 ---
+```mermaid
+flowchart TD
+    subgraph SenderPeer["📤 SENDER PEER"]
+        WalletS["💳 Wallet Private Key"]
+        TX["📝 Create Transaction"]
+    end
+
+    subgraph Network["🌍 P2P MESH NETWORK"]
+        direction LR
+        P1["🔵 Peer A"]
+        P2["🔵 Peer B"]
+        P3["🔵 Peer C"]
+        P4["🔵 Peer D"]
+        P5["🔵 Peer E"]
+        P6["🔵 Peer F"]
+        P7["🔵 Peer G"]
+        P8["🔵 Peer H"]
+    end
+
+    subgraph Validators["✅ VALIDATION LAYER"]
+        V1["🔍 Verify ECDSA Signature"]
+        V2["💰 Check Sender Balance"]
+        V3["🚫 Anti Double-Spend"]
+    end
+
+    subgraph Consensus["⚖️ CONSENSUS LAYER"]
+        C1["📦 Block Formation"]
+        C2["🗳️ Agreement Protocol"]
+        C3["💾 Commit to Ledger"]
+    end
+
+    subgraph ReceiverPeer["📥 RECEIVER PEER"]
+        WalletR["💳 Wallet Updated"]
+        Notify["🔔 Transfer Confirmed"]
+    end
+
+    TX -->|"🔐 Signed TX"| P1
+    TX -->|"🔐 Signed TX"| P2
+    TX -->|"🔐 Signed TX"| P3
+
+    P1 <-->|"Gossip"| P2
+    P2 <-->|"Gossip"| P4
+    P3 <-->|"Gossip"| P5
+    P4 <-->|"Gossip"| P6
+    P5 <-->|"Gossip"| P7
+    P6 <-->|"Gossip"| P8
+    P7 <-->|"Gossip"| P1
+    P8 <-->|"Gossip"| P3
+    P4 <-->|"Gossip"| P8
+
+    P4 --> V1
+    P6 --> V1
+    P8 --> V1
+    V1 --> V2
+    V2 --> V3
+    V3 --> C1
+    C1 --> C2
+    C2 --> C3
+
+    C3 -->|"✅ Block Confirmed"| P2
+    C3 -->|"✅ Block Confirmed"| P5
+    C3 -->|"✅ Block Confirmed"| P7
+
+    P2 -->|"Broadcast"| P1
+    P5 -->|"Broadcast"| P3
+    P7 -->|"Broadcast"| P4
+
+    P1 -->|"Final Status"| WalletR
+    WalletR --> Notify
+
+    style SenderPeer fill:#1a1a2e,stroke:#4CAF50,stroke-width:2px,color:#fff
+    style ReceiverPeer fill:#1a1a2e,stroke:#4CAF50,stroke-width:2px,color:#fff
+    style Network fill:#0d1117,stroke:#2196F3,stroke-width:2px,color:#fff
+    style Validators fill:#0d1117,stroke:#e94560,stroke-width:2px,color:#fff
+    style Consensus fill:#0d1117,stroke:#FF9800,stroke-width:2px,color:#fff
+    
+    style P1 fill:#2196F3,stroke:#0b5e9e,stroke-width:1.5px,color:#fff
+    style P2 fill:#2196F3,stroke:#0b5e9e,stroke-width:1.5px,color:#fff
+    style P3 fill:#2196F3,stroke:#0b5e9e,stroke-width:1.5px,color:#fff
+    style P4 fill:#2196F3,stroke:#0b5e9e,stroke-width:1.5px,color:#fff
+    style P5 fill:#2196F3,stroke:#0b5e9e,stroke-width:1.5px,color:#fff
+    style P6 fill:#2196F3,stroke:#0b5e9e,stroke-width:1.5px,color:#fff
+    style P7 fill:#2196F3,stroke:#0b5e9e,stroke-width:1.5px,color:#fff
+    style P8 fill:#2196F3,stroke:#0b5e9e,stroke-width:1.5px,color:#fff
+    
+    style TX fill:#4CAF50,stroke:#2e7d32,stroke-width:1.5px,color:#fff
+    style WalletS fill:#FF9800,stroke:#e65100,stroke-width:1.5px,color:#fff
+    style WalletR fill:#FF9800,stroke:#e65100,stroke-width:1.5px,color:#fff
+    style Notify fill:#4CAF50,stroke:#2e7d32,stroke-width:1.5px,color:#fff
+```
 
 ## 📡 Network Flow Summary
 
