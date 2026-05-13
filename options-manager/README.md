@@ -37,7 +37,7 @@
 - [📄 License](#-license)
 
 ---
-<img width="899" height="683" alt="image" src="https://github.com/user-attachments/assets/aa69dc51-a901-4855-abed-ee670e461950" />
+<img width="687" height="769" alt="image" src="https://github.com/user-attachments/assets/14499adb-38e3-4286-b335-985467253869" />
 
 
 ## ✨ FEATURES
