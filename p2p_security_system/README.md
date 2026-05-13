@@ -34,7 +34,11 @@
 - [📄 License](#-license)
 
 ---
-<img width="1232" height="921" alt="image" src="https://github.com/user-attachments/assets/9f367b7d-2ff8-410c-ac14-f5887f4a3e5d" />
+
+
+<img width="1007" height="701" alt="image" src="https://github.com/user-attachments/assets/e31c9238-5cd6-4376-998c-6b1b3e2301b2" />
+<img width="1211" height="942" alt="image" src="https://github.com/user-attachments/assets/a5c5ffdb-995b-432b-935d-2e2d80e3b02c" />
+
 
 
 ## ✨ Features
