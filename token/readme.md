@@ -31,7 +31,89 @@ P2P Token System is a production-ready, high-performance blockchain implementati
 | Max Tokens | 10,000 |
 
 ---
-<img width="1100" height="550" alt="image" src="https://github.com/user-attachments/assets/e1fc0d36-e3e9-44a9-b613-71605c841c86" />
+## 🪙 Token Introduction Mechanism
+
+```mermaid
+flowchart TD
+    subgraph TokenMint["🏦 TOKEN ORIGIN"]
+        Genesis["🌟 Genesis Block"]
+        Mint["🔨 Token Minting"]
+        Supply["📊 Total Supply: 1,000,000"]
+    end
+
+    subgraph Distribution["📤 DISTRIBUTION"]
+        Faucet["💧 Token Faucet"]
+        Mining["⛏️ Proof of Work Mining"]
+        Staking["🔒 Staking Rewards"]
+        Airdrop["🎁 Airdrop / Community"]
+    end
+
+    subgraph P2PNetwork["🌍 P2P NETWORK LAYER"]
+        direction LR
+        Peer1["Peer A"]
+        Peer2["Peer B"]
+        Peer3["Peer C"]
+        Peer4["Peer D"]
+        Peer1 <--> Peer2
+        Peer2 <--> Peer3
+        Peer3 <--> Peer4
+        Peer4 <--> Peer1
+    end
+
+    subgraph TokenTx["🪙 TOKEN TRANSACTIONS"]
+        Send["✍️ Create Token TX"]
+        Sign["🔐 Sign with Private Key"]
+        Broadcast["🌊 Broadcast to Mesh"]
+        Validate["✅ Peer Validation"]
+        Commit["💾 Commit to Ledger"]
+    end
+
+    subgraph Balance["💰 BALANCE MANAGEMENT"]
+        WalletA["👤 Sender Balance: -10"]
+        WalletB["👥 Recipient Balance: +10"]
+        Ledger["📒 Global Token Ledger"]
+    end
+
+    Genesis --> Mint
+    Mint --> Supply
+    Supply --> Faucet
+    Supply --> Mining
+    Supply --> Staking
+    Supply --> Airdrop
+
+    Faucet --> Peer1
+    Mining --> Peer2
+    Staking --> Peer3
+    Airdrop --> Peer4
+
+    Peer1 --> Send
+    Peer2 --> Send
+    Peer3 --> Send
+    Peer4 --> Send
+
+    Send --> Sign
+    Sign --> Broadcast
+    Broadcast --> Validate
+    Validate --> Commit
+
+    Commit --> WalletA
+    Commit --> WalletB
+    WalletA --> Ledger
+    WalletB --> Ledger
+
+    style TokenMint fill:#1a1a2e,stroke:#FF9800,stroke-width:2px,color:#fff
+    style Distribution fill:#1a1a2e,stroke:#4CAF50,stroke-width:2px,color:#fff
+    style P2PNetwork fill:#0d1117,stroke:#2196F3,stroke-width:2px,color:#fff
+    style TokenTx fill:#0d1117,stroke:#e94560,stroke-width:2px,color:#fff
+    style Balance fill:#0d1117,stroke:#9C27B0,stroke-width:2px,color:#fff
+    
+    style Genesis fill:#FF9800,stroke:#e65100,stroke-width:1.5px,color:#fff
+    style Mint fill:#FF9800,stroke:#e65100,stroke-width:1.5px,color:#fff
+    style Faucet fill:#4CAF50,stroke:#2e7d32,stroke-width:1.5px,color:#fff
+    style Mining fill:#2196F3,stroke:#0b5e9e,stroke-width:1.5px,color:#fff
+    style Staking fill:#9C27B0,stroke:#6a1b9a,stroke-width:1.5px,color:#fff
+    style Airdrop fill:#e94560,stroke:#b71c1c,stroke-width:1.5px,color:#fff
+```
 
 ## 🚀 Features
 
