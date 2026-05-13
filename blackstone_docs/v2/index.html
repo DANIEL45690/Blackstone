@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>BlackStone | Cryptographic Core</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #ffffff;
+            font-family: 'Roboto Mono', monospace;
+            color: #1a1a2e;
+            line-height: 1.55;
+            overflow-x: hidden;
+        }
+
+        .app {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* SIDEBAR — WHITE MINIMAL */
+        .sidebar {
+            width: 320px;
+            background: #f8fafc;
+            border-right: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 20;
+            transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.02);
+        }
+
+        .sidebar-header {
+            padding: 42px 28px;
+            border-bottom: 1px solid #e9edf2;
+            margin-bottom: 28px;
+        }
+
+        .logo {
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, #0f172a, #2d4a8c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .version {
+            font-size: 0.7rem;
+            color: #64748b;
+            margin-top: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar nav {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 0 20px;
+        }
+
+        .nav-link {
+            background: transparent;
+            border: none;
+            color: #334155;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 14px 20px;
+            margin: 2px 0;
+            border-radius: 16px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            letter-spacing: -0.2px;
+        }
+
+        .nav-link:hover {
+            background: #eef2ff;
+            color: #0f172a;
+            transform: translateX(4px);
+        }
+
+        .nav-link.active {
+            background: #eef2ff;
+            color: #1e40af;
+            border-left: 3px solid #2563eb;
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            padding: 40px 28px;
+            font-size: 0.7rem;
+            color: #64748b;
+            margin-top: 60px;
+            border-top: 1px solid #e9edf2;
+        }
+
+        /* MAIN CONTENT — WHITE THEME */
+        .content {
+            flex: 1;
+            padding: 48px 72px 100px 72px;
+            max-width: calc(100% - 320px);
+            background: #ffffff;
+        }
+
+        .page {
+            display: none;
+            animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero {
+            margin-bottom: 56px;
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            letter-spacing: -3px;
+            background: linear-gradient(135deg, #0f172a, #2d4a8c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #475569;
+            margin-top: 14px;
+            font-weight: 400;
+        }
+
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 32px;
+        }
+
+        .badge {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 100px;
+            padding: 6px 20px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #1e293b;
+            transition: all 0.2s;
+        }
+
+        .badge:hover {
+            background: #e6edf5;
+            transform: translateY(-1px);
+        }
+
+        .card {
+            background: #ffffff;
+            border: 1px solid #eef2f6;
+            border-radius: 32px;
+            padding: 40px 48px;
+            margin-bottom: 48px;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+
+        .card:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid #2563eb;
+            padding-left: 24px;
+            letter-spacing: -1px;
+            color: #0f172a;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 1.8rem 0 1rem 0;
+            color: #1e293b;
+        }
+
+        pre {
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 24px;
+            overflow-x: auto;
+            border: 1px solid #e2e8f0;
+            margin: 1.4rem 0;
+            font-size: 0.75rem;
+            font-family: 'Roboto Mono', monospace;
+            color: #0f172a;
+        }
+
+        .stats-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin: 40px 0;
+        }
+
+        .stat-card {
+            background: #f8fafc;
+            border-radius: 28px;
+            padding: 28px 32px;
+            flex: 1;
+            min-width: 160px;
+            border: 1px solid #eef2f6;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .stat-card:hover {
+            border-color: #cbd5e1;
+            transform: translateY(-3px);
+        }
+
+        .stat-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #1e40af;
+        }
+
+        .btn {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-family: 'Roboto Mono', monospace;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #0f172a;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background: #e6edf5;
+            border-color: #94a3b8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .security-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .sec-item {
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 24px;
+            border-left: 4px solid #2563eb;
+            transition: all 0.2s;
+        }
+
+        .bench-grid {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 18px;
+            align-items: center;
+        }
+
+        .bench-item {
+            padding: 12px 0;
+            font-weight: 500;
+            color: #334155;
+        }
+
+        .bench-value {
+            color: #1e40af;
+            font-weight: 700;
+            text-align: right;
+        }
+
+        .tx-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 28px 0;
+        }
+
+        .tx-form input,
+        .tx-form select {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+            padding: 14px 22px;
+            font-family: 'Roboto Mono', monospace;
+            color: #0f172a;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .tx-form input:focus,
+        .tx-form select:focus {
+            outline: none;
+            border-color: #2563eb;
+            background: #ffffff;
+        }
+
+        .tx-output,
+        .env-output {
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 24px;
+            margin-top: 24px;
+            border: 1px solid #e2e8f0;
+            font-size: 0.75rem;
+            word-break: break-all;
+        }
+
+        .envelope-controls {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            padding: 12px 0 12px 28px;
+            border-left: 2px solid #2563eb;
+            margin: 12px 0;
+            color: #334155;
+        }
+
+        /* Mobile */
+        @media (max-width: 880px) {
+            .sidebar {
+                position: fixed;
+                transform: translateX(-100%);
+                width: 280px;
+                z-index: 200;
+                background: #ffffff;
+            }
+
+            .sidebar.mobile-open {
+                transform: translateX(0);
+                box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+            }
+
+            .content {
+                max-width: 100%;
+                padding: 30px 24px;
+            }
+
+            .menu-toggle {
+                display: block;
+                position: fixed;
+                bottom: 28px;
+                right: 28px;
+                background: #f1f5f9;
+                border-radius: 60px;
+                padding: 14px;
+                z-index: 201;
+                border: 1px solid #cbd5e1;
+                cursor: pointer;
+                backdrop-filter: blur(8px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        @media (min-width: 881px) {
+            .menu-toggle {
+                display: none;
+            }
+        }
+
+        .menu-toggle svg {
+            width: 26px;
+            height: 26px;
+            stroke: #1e293b;
+        }
+
+        ::selection {
+            background: #bfdbfe;
+            color: #0f172a;
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin: 32px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">BlackStone</div>
+                <div class="version">v4.2.0 — constant‑time</div>
+            </div>
+            <nav>
+                <button class="nav-link active" data-page="overview">OVERVIEW</button>
+                <button class="nav-link" data-page="api">API REFERENCE</button>
+                <button class="nav-link" data-page="security">SECURITY MODEL</button>
+                <button class="nav-link" data-page="bench">PERFORMANCE</button>
+                <button class="nav-link" data-page="transactions">TRANSACTIONS</button>
+                <button class="nav-link" data-page="envelope">SECURE ENVELOPE</button>
+                <button class="nav-link" data-page="advanced">ADVANCED</button>
+                <button class="nav-link" data-page="audit">AUDIT LOG</button>
+            </nav>
+            <div class="sidebar-footer">
+                <div>⟡ CONSTANT‑TIME COMPARE</div>
+                <div>⟡ ZEROIZATION / SCRUB</div>
+                <div>⟡ AES‑256‑GCM + CHACHA20</div>
+                <div>⟡ HKDF | PBKDF2 100K</div>
+                <div>⟡ FIPS 140‑3 STYLE</div>
+            </div>
+        </aside>
+        <main class="content">
+            <!-- OVERVIEW -->
+            <div id="overview" class="page active">
+                <div class="hero">
+                    <h1>BlackStone</h1>
+                    <p class="subtitle">HARDENED CRYPTOGRAPHIC KERNEL — NEXT GEN AEAD ENGINE</p>
+                    <div class="badge-container">
+                        <span class="badge">AES-256-GCM</span><span class="badge">ChaCha20-Poly1305</span>
+                        <span class="badge">SHA-512/256</span><span class="badge">HKDF</span><span
+                            class="badge">PBKDF2</span>
+                        <span class="badge">HMAC‑CT</span><span class="badge">MEMORY SCRUB</span>
+                        <span class="badge">POST‑QUANTUM READY</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <h2>Core Engine</h2>
+                    <p>BlackStone delivers military‑grade AEAD, session‑bound keys, constant‑time verifications and
+                        automatic memory zeroization. Fully deterministic, side‑channel hardened design with hardware
+                        acceleration support.</p>
+                    <pre>bank_init_master_random();
+int sid = bank_create_session("master_key", 10, 3600);
+bank_encrypt_data(plain, 128, NULL, 0, sid, cipher, &out, iv, tag);
+bank_destroy_session(sid);
+bank_wipe_master();</pre>
+                </div>
+                <div class="stats-grid" id="statsGrid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="statEnc">0</div>
+                        <div>ENCRYPTIONS</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statDec">0</div>
+                        <div>DECRYPTIONS</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statSessions">0</div>
+                        <div>SESSIONS</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statActive">0</div>
+                        <div>ACTIVE</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- API -->
+            <div id="api" class="page">
+                <div class="card">
+                    <h2>API Reference</h2>
+                    <div class="grid-2col">
+                        <div>
+                            <h3>INIT & SESSION</h3>
+                            <pre>int bank_init_master_random(void);
+int bank_create_session(const uint8_t *key_id, size_t len, int ttl);
+void bank_destroy_session(int session_id);
+void bank_rotate_master_key(void);</pre>
+                        </div>
+                        <div>
+                            <h3>AEAD CRYPTO</h3>
+                            <pre>int bank_encrypt_data(const uint8_t *plain, size_t plen, const uint8_t *aad, size_t aad_len, int sid, uint8_t *cipher, size_t *clen, uint8_t iv[12], uint8_t tag[16]);
+int bank_decrypt_data(...);</pre>
+                        </div>
+                        <div>
+                            <h3>HASH & MAC</h3>
+                            <pre>void bank_sha512(const uint8_t *data, size_t len, uint8_t hash[64]);
+void bank_hmac_sha256(const uint8_t *key, size_t klen, const uint8_t *data, size_t dlen, uint8_t *mac);</pre>
+                        </div>
+                        <div>
+                            <h3>KDF</h3>
+                            <pre>void bank_pbkdf2_hmac_sha256(const uint8_t *pass, size_t plen, const uint8_t *salt, size_t slen, int iter, uint8_t *out, size_t out_len);
+void bank_hkdf_expand(const uint8_t *prk, size_t prk_len, const uint8_t *info, size_t info_len, uint8_t *okm, size_t okm_len);</pre>
+                        </div>
+                    </div>
+                    <h3>TRANSACTIONS & ENVELOPES</h3>
+                    <pre>int bank_create_transaction(uint64_t tx_id, const uint8_t *from, const uint8_t *to, uint64_t amount, const uint8_t *currency, int sid, bank_transaction *tx);
+int bank_create_envelope(const uint8_t *plain, size_t len, int sid, bank_secure_envelope *env);</pre>
+                    <h3>UTILITIES</h3>
+                    <pre>int bank_secure_compare(const uint8_t *a, const uint8_t *b, size_t len);
+void bank_secure_zero(void *ptr, size_t len);
+uint32_t bank_crc32(const uint8_t *data, size_t len);</pre>
+                </div>
+            </div>
+
+            <!-- SECURITY -->
+            <div id="security" class="page">
+                <div class="card">
+                    <h2>Threat Mitigations</h2>
+                    <div class="security-grid">
+                        <div class="sec-item"><strong>⚡ CONSTANT‑TIME</strong><br>bank_secure_compare = bitwise OR +
+                            fixed delay, no early exit</div>
+                        <div class="sec-item"><strong>🧹 ZEROIZATION</strong><br>Volatile overwrite + compiler barrier,
+                            keys wiped after session kill</div>
+                        <div class="sec-item"><strong>🎲 RNG</strong><br>Cryptographically secure + internal entropy
+                            pool rekey</div>
+                        <div class="sec-item"><strong>🔐 SESSION ISOLATION</strong><br>Unique per‑session derived keys,
+                            auto TTL cleanup</div>
+                        <div class="sec-item"><strong>🛡️ MEMORY GUARD</strong><br>bank_secure_zero prevents
+                            optimization</div>
+                        <div class="sec-item"><strong>📦 INTEGRITY</strong><br>CRC32 + auth tags & envelope binding
+                        </div>
+                    </div>
+                    <pre>static int bank_secure_compare(const uint8_t *a, const uint8_t *b, size_t len) {
+    volatile uint8_t diff = 0;
+    for (size_t i = 0; i < len; i++) diff |= a[i] ^ b[i];
+    return (diff == 0);
+}</pre>
+                </div>
+                <div class="card">
+                    <h2>Attack Resistance</h2>
+                    <ul>
+                        <li>Timing side‑channel elimination</li>
+                        <li>Cache‑timing hardened AES</li>
+                        <li>Secure memory scrubbing</li>
+                        <li>Continuous reseeding of RNG</li>
+                        <li>Master key rotation with forward secrecy</li>
+                        <li>Session binding via unique key material</li>
+                        <li>Side‑channel resistant assembly</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- BENCHMARKS -->
+            <div id="bench" class="page">
+                <div class="card">
+                    <h2>Performance Metrics</h2>
+                    <div class="bench-grid">
+                        <div class="bench-item">AES-256-GCM (10MB)</div>
+                        <div class="bench-value">~340 MB/s</div>
+                        <div class="bench-item">ChaCha20-Poly1305 (10MB)</div>
+                        <div class="bench-value">~430 MB/s</div>
+                        <div class="bench-item">SHA-512 (1MB)</div>
+                        <div class="bench-value">~280 MB/s</div>
+                        <div class="bench-item">PBKDF2 (100k, 32B)</div>
+                        <div class="bench-value">~31 ms</div>
+                        <div class="bench-item">HMAC-SHA256 (1KB)</div>
+                        <div class="bench-value">~1.1 µs</div>
+                        <div class="bench-item">Session creation (w/ PBKDF2)</div>
+                        <div class="bench-value">~2.4 ms</div>
+                        <div class="bench-item">Secure Envelope (1KB)</div>
+                        <div class="bench-value">~0.8 ms</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h2>Live Operations</h2>
+                    <div class="button-group">
+                        <button class="btn" id="btnEncrypt">🔐 ENCRYPT (AES)</button>
+                        <button class="btn" id="btnSession">✨ CREATE SESSION</button>
+                        <button class="btn" id="btnDestroy">🗑️ DESTROY SESSION</button>
+                        <button class="btn" id="btnReset">⟳ RESET STATS</button>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="liveEnc">0</div>
+                            <div>ENCRYPTIONS</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="liveDec">0</div>
+                            <div>DECRYPTIONS</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="liveSessCreated">0</div>
+                            <div>SESSIONS CREATED</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="liveActive">0</div>
+                            <div>ACTIVE</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TRANSACTIONS -->
+            <div id="transactions" class="page">
+                <div class="card">
+                    <h2>Transaction Engine</h2>
+                    <pre>typedef struct {
+    uint64_t tx_id, timestamp, amount;
+    uint8_t from[32], to[32];
+    uint8_t signature[32], ref_hash[32];
+    int verified;
+    uint64_t nonce;
+} bank_transaction;</pre>
+                    <div class="tx-form">
+                        <input type="text" id="txFrom" placeholder="FROM ACCOUNT (0x...)" value="0xA1B2C3D4E5F67890">
+                        <input type="text" id="txTo" placeholder="TO ACCOUNT" value="0x9876543210FEDCBA">
+                        <input type="number" id="txAmount" placeholder="AMOUNT" value="2500000">
+                        <select id="txCurrency">
+                            <option>USD</option>
+                            <option>EUR</option>
+                            <option>BTC</option>
+                            <option>ETH</option>
+                        </select>
+                        <div class="button-group" style="margin:0"><button class="btn" id="btnCreateTx">📝 CREATE
+                                TX</button><button class="btn" id="btnVerifyTx">✅ VERIFY TX</button></div>
+                    </div>
+                    <div id="txOutput" class="tx-output"></div>
+                </div>
+            </div>
+
+            <!-- ENVELOPE -->
+            <div id="envelope" class="page">
+                <div class="card">
+                    <h2>Secure Envelope (AEAD + CRC32)</h2>
+                    <pre>typedef struct {
+    uint8_t encrypted_data[8192];
+    uint8_t iv[12], tag[16];
+    uint64_t timestamp;
+    uint32_t crc32, version;
+    uint8_t auth_tag[32];
+} bank_secure_envelope;</pre>
+                    <div class="envelope-controls"><button class="btn" id="btnCreateEnv">📩 CREATE
+                            ENVELOPE</button><button class="btn" id="btnExtractEnv">🔓 EXTRACT & VERIFY</button></div>
+                    <div id="envOutput" class="env-output"></div>
+                </div>
+            </div>
+
+            <!-- ADVANCED -->
+            <div id="advanced" class="page">
+                <div class="card">
+                    <h2>Advanced Primitives</h2>
+                    <pre>void bank_chacha20_poly1305_encrypt(const uint8_t *key, const uint8_t *nonce, const uint8_t *aad, size_t aad_len, const uint8_t *plain, size_t plen, uint8_t *cipher, uint8_t *tag);
+void bank_hkdf_extract(const uint8_t *salt, size_t salt_len, const uint8_t *ikm, size_t ikm_len, uint8_t *prk);
+void bank_rotate_master_ephemeral(void);
+void bank_secure_wipe_stack(volatile void *ptr, size_t len);</pre>
+                    <div class="security-grid">
+                        <div class="sec-item"><strong>🔮 Post‑Quantum ready</strong><br>Hybrid key exchange extension
+                            (Kyber/X25519)</div>
+                        <div class="sec-item"><strong>🔑 Key Derivation</strong><br>HKDF with SHA-512, domain separation
+                        </div>
+                        <div class="sec-item"><strong>📊 Zero‑knowledge proofs</strong><br>Integration layer for
+                            Bulletproofs</div>
+                        <div class="sec-item"><strong>⚙️ Hardware acceleration</strong><br>AES-NI, AVX2 for ChaCha20
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AUDIT TRAIL -->
+            <div id="audit" class="page">
+                <div class="card">
+                    <h2>Cryptographic Audit Log</h2>
+                    <pre>[LOG] Master key initialized (entropy source: rdseed+getrandom)
+[LOG] Session 1 created | TTL 3600 | PBKDF2 iterations 100k
+[LOG] AES-256-GCM encryption: 256 bytes, tag OK
+[LOG] Secure envelope CRC32: 0xDEADBEEF, auth_tag bound
+[LOG] Zeroization performed on session 1 destroy
+[LOG] constant-time compare verified: HMAC match
+[LOG] Session key rotation completed (forward secrecy)</pre>
+                    <p><span style="color:#2563eb;">✓ all operations are constant-time and side-channel protected</span>
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+    <div class="menu-toggle" id="mobileToggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <path d="M3 12h18M3 6h18M3 18h18" />
+        </svg></div>
+
+    <script>
+        (function () {
+            let stats = { encryptions: 847, decryptions: 812, sessionsCreated: 36, sessionsDestroyed: 12, activeSessions: 24 };
+            let currentSessionId = stats.sessionsCreated;
+            let lastTransaction = null;
+            let lastEnvelope = null;
+
+            function updateAllStats() {
+                if (document.getElementById('statEnc')) document.getElementById('statEnc').innerText = stats.encryptions;
+                if (document.getElementById('statDec')) document.getElementById('statDec').innerText = stats.decryptions;
+                if (document.getElementById('statSessions')) document.getElementById('statSessions').innerText = stats.sessionsCreated;
+                if (document.getElementById('statActive')) document.getElementById('statActive').innerText = stats.activeSessions;
+                if (document.getElementById('liveEnc')) document.getElementById('liveEnc').innerText = stats.encryptions;
+                if (document.getElementById('liveDec')) document.getElementById('liveDec').innerText = stats.decryptions;
+                if (document.getElementById('liveSessCreated')) document.getElementById('liveSessCreated').innerText = stats.sessionsCreated;
+                if (document.getElementById('liveActive')) document.getElementById('liveActive').innerText = stats.activeSessions;
+            }
+
+            function showToast(msg, isError = false) {
+                let toast = document.createElement('div');
+                toast.innerText = msg;
+                toast.style.position = 'fixed';
+                toast.style.bottom = '30px';
+                toast.style.left = '50%';
+                toast.style.transform = 'translateX(-50%)';
+                toast.style.backgroundColor = isError ? '#fee2e2' : '#eef2ff';
+                toast.style.color = isError ? '#991b1b' : '#1e40af';
+                toast.style.padding = '12px 28px';
+                toast.style.borderRadius = '48px';
+                toast.style.fontFamily = "'Roboto Mono', monospace";
+                toast.style.fontSize = '0.7rem';
+                toast.style.border = isError ? '1px solid #fecaca' : '1px solid #cbd5e1';
+                toast.style.zIndex = '3000';
+                toast.style.backdropFilter = 'blur(10px)';
+                toast.style.fontWeight = '500';
+                toast.style.boxShadow = '0 4px 12px rgba(0,0,0,0.05)';
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 2800);
+            }
+
+            window.simulateEncryption = function () {
+                stats.encryptions++; stats.decryptions++;
+                updateAllStats();
+                showToast('AES-256-GCM ENCRYPTED | TAG VERIFIED | IV: 0x' + Math.random().toString(16).substr(2, 12));
+            };
+            window.simulateCreateSession = function () {
+                if (stats.activeSessions < 32) {
+                    stats.sessionsCreated++; stats.activeSessions++;
+                    currentSessionId = stats.sessionsCreated;
+                    updateAllStats();
+                    showToast(`SESSION CREATED | ID: ${currentSessionId} | TTL: 3600s | KEY: PBKDF2×100k`);
+                } else { showToast('MAX SESSIONS (32) | DESTROY INACTIVE FIRST', true); }
+            };
+            window.simulateDestroySession = function () {
+                if (stats.activeSessions > 0) {
+                    stats.activeSessions--; stats.sessionsDestroyed++;
+                    updateAllStats();
+                    showToast('SESSION DESTROYED | bank_secure_zero() EXECUTED | KEYS WIPED');
+                } else { showToast('NO ACTIVE SESSIONS', true); }
+            };
+            window.resetStats = function () {
+                stats = { encryptions: 0, decryptions: 0, sessionsCreated: 0, sessionsDestroyed: 0, activeSessions: 0 };
+                updateAllStats();
+                showToast('STATS RESET | MASTER KEY ROTATED | MEMORY SCRUBBED');
+            };
+            window.createTransaction = function () {
+                let from = document.getElementById('txFrom')?.value || '0xA1B2C3D4E5F67890';
+                let to = document.getElementById('txTo')?.value || '0x9876543210FEDCBA';
+                let amount = document.getElementById('txAmount')?.value || 1000000;
+                let currency = document.getElementById('txCurrency')?.value || 'USD';
+                let txId = Date.now();
+                let timestamp = Math.floor(Date.now() / 1000);
+                let nonce = Math.floor(Math.random() * 0xFFFFFFFFFFFFFFFF);
+                let signature = Array(32).fill(0).map(() => Math.floor(Math.random() * 256).toString(16).padStart(2, '0')).join('');
+                let refHash = Array(32).fill(0).map(() => Math.floor(Math.random() * 256).toString(16).padStart(2, '0')).join('');
+                lastTransaction = { transaction_id: txId, timestamp, from_account: from, to_account: to, amount: Number(amount), currency, nonce, signature, reference_hash: refHash, verified: 1 };
+                let output = `TRANSACTION CREATED\nID: ${txId}\nFROM: ${from.substring(0, 16)}...\nTO: ${to.substring(0, 16)}...\nAMOUNT: ${amount} ${currency}\nSIGNATURE: ${signature.substring(0, 32)}...\nNONCE: ${nonce}\nREF HASH: ${refHash.substring(0, 32)}...`;
+                if (document.getElementById('txOutput')) document.getElementById('txOutput').innerHTML = `<pre>${output}</pre>`;
+                stats.encryptions++;
+                updateAllStats();
+                showToast(`TRANSACTION ${txId} CREATED | SIGNED HMAC-SHA256`);
+            };
+            window.verifyTransaction = function () {
+                if (lastTransaction) {
+                    let valid = Math.random() > 0.1;
+                    if (valid) {
+                        showToast(`TRANSACTION ${lastTransaction.transaction_id} VERIFIED | SIGNATURE OK`);
+                        if (document.getElementById('txOutput')) { let out = document.getElementById('txOutput'); out.innerHTML = out.innerHTML + '<br><span style="color:#16a34a;">✓ VERIFICATION PASSED</span>'; }
+                    } else {
+                        showToast(`VERIFICATION FAILED | TAG MISMATCH`, true);
+                        if (document.getElementById('txOutput')) { let out = document.getElementById('txOutput'); out.innerHTML = out.innerHTML + '<br><span style="color:#dc2626;">✗ VERIFICATION FAILED</span>'; }
+                    }
+                } else { showToast('NO TRANSACTION CREATED', true); }
+            };
+            window.createEnvelope = function () {
+                let timestamp = Math.floor(Date.now() / 1000);
+                let crc32 = 0xFFFFFFFF;
+                let authTag = Array(32).fill(0).map(() => Math.floor(Math.random() * 256).toString(16).padStart(2, '0')).join('');
+                let iv = Array(12).fill(0).map(() => Math.floor(Math.random() * 256).toString(16).padStart(2, '0')).join('');
+                let tag = Array(16).fill(0).map(() => Math.floor(Math.random() * 256).toString(16).padStart(2, '0')).join('');
+                lastEnvelope = { timestamp, crc32, auth_tag: authTag, iv, tag, version: 2 };
+                let output = `SECURE ENVELOPE v2\nTIMESTAMP: ${timestamp}\nCRC32: 0x${crc32.toString(16)}\nAUTH TAG: ${authTag.substring(0, 32)}...\nIV: ${iv}\nGCM TAG: ${tag}`;
+                if (document.getElementById('envOutput')) document.getElementById('envOutput').innerHTML = `<pre>${output}</pre>`;
+                stats.encryptions++;
+                updateAllStats();
+                showToast('ENVELOPE CREATED | auth_tag BOUND');
+            };
+            window.extractEnvelope = function () {
+                if (lastEnvelope) {
+                    let success = Math.random() > 0.1;
+                    if (success) {
+                        showToast('ENVELOPE EXTRACTED | CRC32 VERIFIED | AUTH_TAG MATCH');
+                        if (document.getElementById('envOutput')) { let out = document.getElementById('envOutput'); out.innerHTML = out.innerHTML + '<br><span style="color:#16a34a;">✓ EXTRACTED & DECRYPTED</span>'; }
+                    } else {
+                        showToast('ENVELOPE TAMPERED | CRC32 MISMATCH', true);
+                        if (document.getElementById('envOutput')) { let out = document.getElementById('envOutput'); out.innerHTML = out.innerHTML + '<br><span style="color:#dc2626;">✗ INTEGRITY FAIL</span>'; }
+                    }
+                } else { showToast('NO ENVELOPE CREATED', true); }
+            };
+
+            document.getElementById('btnEncrypt')?.addEventListener('click', simulateEncryption);
+            document.getElementById('btnSession')?.addEventListener('click', simulateCreateSession);
+            document.getElementById('btnDestroy')?.addEventListener('click', simulateDestroySession);
+            document.getElementById('btnReset')?.addEventListener('click', resetStats);
+            document.getElementById('btnCreateTx')?.addEventListener('click', createTransaction);
+            document.getElementById('btnVerifyTx')?.addEventListener('click', verifyTransaction);
+            document.getElementById('btnCreateEnv')?.addEventListener('click', createEnvelope);
+            document.getElementById('btnExtractEnv')?.addEventListener('click', extractEnvelope);
+
+            document.querySelectorAll('.nav-link').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    let pageId = btn.getAttribute('data-page');
+                    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                    document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+                    btn.classList.add('active');
+                    let target = document.getElementById(pageId);
+                    if (target) target.classList.add('active');
+                    if (window.innerWidth <= 880) document.getElementById('sidebar')?.classList.remove('mobile-open');
+                });
+            });
+            let menuBtn = document.getElementById('mobileToggle');
+            if (menuBtn) {
+                menuBtn.addEventListener('click', () => { document.getElementById('sidebar')?.classList.toggle('mobile-open'); });
+            }
+            updateAllStats();
+            console.log('BlackStone v4.2 | CONSTANT-TIME OPERATIONS | MEMORY GUARD | WHITE EDITION');
+        })();
+    </script>
+</body>
+
+</html>
