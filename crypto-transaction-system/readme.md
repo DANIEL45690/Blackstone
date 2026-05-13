@@ -13,8 +13,9 @@
 > Enterprise-grade encryption and distributed storage system for secure transaction processing
 
 ---
-<img width="932" height="892" alt="image" src="https://github.com/user-attachments/assets/57a4b0ce-fcd9-45a3-98ac-18fbdc2e555e" />
-<img width="1038" height="872" alt="image" src="https://github.com/user-attachments/assets/68b249b1-9b76-40aa-a595-ea45727ae86b" />
+<img width="1038" height="872" alt="image" src="https://github.com/user-attachments/assets/63cea556-f84e-42ca-ac2d-9150658f5dcf" />
+<img width="932" height="892" alt="image" src="https://github.com/user-attachments/assets/f6d1f8dd-c36c-4d1b-8996-f0df9d7ae332" />
+
 
 
 
