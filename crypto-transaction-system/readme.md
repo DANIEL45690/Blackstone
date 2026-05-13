@@ -1,5 +1,4 @@
-<img width="1038" height="872" alt="image" src="https://github.com/user-attachments/assets/1867bf9b-830b-4294-9e72-c03e4a263e78" /><img width="848" height="1264" alt="image" src="https://github.com/user-attachments/assets/73753f12-afe6-4fa9-9b1f-bf3df34bad4f" />
-
+<img width="848" height="1264" alt="image" src="https://github.com/user-attachments/assets/e9d640b3-2fdb-40dd-a3d1-5318e1648889" />
 
 # crypto transaction system 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
@@ -14,8 +13,9 @@
 > Enterprise-grade encryption and distributed storage system for secure transaction processing
 
 ---
-<img width="1038" height="872" alt="image" src="https://github.com/user-attachments/assets/373112c6-11d4-4f2a-be0b-5b8f7588ab95" />
-<img width="932" height="892" alt="image" src="https://github.com/user-attachments/assets/273d309f-8e04-46b6-a2be-809a1c902933" />
+<img width="932" height="892" alt="image" src="https://github.com/user-attachments/assets/57a4b0ce-fcd9-45a3-98ac-18fbdc2e555e" />
+<img width="1038" height="872" alt="image" src="https://github.com/user-attachments/assets/68b249b1-9b76-40aa-a595-ea45727ae86b" />
+
 
 
 ## 📊 STATUS
